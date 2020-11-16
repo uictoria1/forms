@@ -22,7 +22,7 @@ export class Text extends Component {
             <>
                 <label>{this.state.question.questionName}</label>
                 <div className="input-group mb-3">
-                    <input type="text" value={this.state.value} onChange={(e) => this.props.backValue(this.state.question.id, e.target.value)} className="form-control" id={"text_" + this.state.question.id} aria-describedby="basic-addon3" />
+                    <input type="text" value={this.state.value} onChange={this.handleChange} className="form-control" id={"text_" + this.state.question.id} aria-describedby="basic-addon3" />
                 </div>
             </>
         );

@@ -25,7 +25,7 @@ export class Form extends Component {
 
         this.Prev = this.Prev.bind(this);
         this.Next = this.Next.bind(this);
-        this.Sync = this.Sync.bind(this);
+
     }
 
     componentDidMount() {
@@ -50,16 +50,13 @@ export class Form extends Component {
 
     }
 
-    Sync(id, value) {
-        console.log(id, value);
-    }
-
+   
     static renderForm(question, value) {
         let type = question.questionType.questionTypeName;
 
         if (type === "text") {
             if (question.enumChoices === null) { // plain text
-                return (<Text key={question.id} question={question} value={value} backValue={this.Sync} />);            }
+                return (<Text key={question.id} question={question} value={value}  />);            }
             else { // select
                 return (<Select key={question.id} question={question} />);
             }
