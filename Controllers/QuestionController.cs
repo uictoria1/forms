@@ -47,44 +47,56 @@ namespace Forms.Controllers
         [HttpPost]
         public IActionResult Post(ICollection<ReceivedAnswer> answers)
         {
-            foreach(var answer in answers)
-            {
-                var ans = new Answer();
-                var question = db.Questions.Find(answer.key);
-                var questOption = db.QuestionOptions.Where(qo => qo.QuestionId == question.Id).FirstOrDefault();
-                var questType = db.QuestionTypes.Find(question.QuestionTypeId);
+            using(var transaction = db.Database.BeginTransaction()){
 
-                switch (questType.QuestionTypeName)
-                {
-                    case "text":
-                        ans.AnswerTextEnum = answer.value;
-                        break;
-                    case "int":
-                        ans.AnswerInt = Int16.Parse(answer.value);
-                        break;
-                    case "bool":
-                        if(answer.value == "true")
-                            ans.AnswerBoolean = true;
-                        else
-                            ans.AnswerBoolean = false;
-                        break;
-                    case "date":
-                        ans.AnswerDate = Convert.ToDateTime(answer.value);
-                        break;
+                try{
+
+                    Dictionary<int, string> response = new Dictionary<int, string>(answers.Count());
+
+                    foreach(var answer in answers)
+                    {
+                        var ans = new Answer();
+                        var question = db.Questions.Find(answer.key);
+                        var questOption = db.QuestionOptions.Where(qo => qo.QuestionId == question.Id).FirstOrDefault();
+                        var questType = db.QuestionTypes.Find(question.QuestionTypeId);
+
+                        response.Add(question.Id, answer.value);
+
+                        switch (questType.QuestionTypeName)
+                        {
+                            case "text":
+                                ans.AnswerTextEnum = answer.value;
+                                break;
+                            case "int":
+                                ans.AnswerInt = Int16.Parse(answer.value);
+                                break;
+                            case "bool":
+                                if(answer.value == "true")
+                                    ans.AnswerBoolean = true;
+                                else
+                                    ans.AnswerBoolean = false;
+                                break;
+                            case "date":
+                                ans.AnswerDate = Convert.ToDateTime(answer.value);
+                                break;
+                        }
+
+                        ans.QuestionOptionId = questType.Id;
+
+                        db.Answers.Add(ans);
+                    }
+
+
+                    db.SaveChanges();
+                    transaction.Commit();
+                    return Ok(response);
+                    
                 }
-
-                ans.QuestionOptionId = questType.Id;
-
-                db.Answers.Add(ans);
+                catch{
+                    transaction.Rollback();
+                    return BadRequest();
+                }
             }
-
-
-            db.SaveChanges();
-            s
-            if(db.)
-
-
-            return Ok(answers);
         }
     }
 }

@@ -32,16 +32,12 @@ export default class App extends Component {
             count++;
         }
 
-        //data["keys[]"] = Object.keys(answers);
-        //data['values[]'] = Object.values(answers);
-
         var xhr = new XMLHttpRequest();
 
         xhr.open("post", this.state.apiUrl, true);
         xhr.onload = function () {
             if (xhr.status === 200) {
-                //this.loadData();
-                console.log("success");
+                // 
             }
         }.bind(this);
         xhr.send(data);
