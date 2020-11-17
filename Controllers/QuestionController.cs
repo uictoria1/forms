@@ -51,7 +51,7 @@ namespace Forms.Controllers
 
                 try{
 
-                    Dictionary<int, string> response = new Dictionary<int, string>(answers.Count());
+                    Dictionary<string, string> response = new Dictionary<string, string>(answers.Count());
 
                     foreach(var answer in answers)
                     {
@@ -60,7 +60,7 @@ namespace Forms.Controllers
                         var questOption = db.QuestionOptions.Where(qo => qo.QuestionId == question.Id).FirstOrDefault();
                         var questType = db.QuestionTypes.Find(question.QuestionTypeId);
 
-                        response.Add(question.QuestionName, questType.QuestionTypeName answer.value);
+                        response.Add(question.QuestionName, answer.value);
 
                         switch (questType.QuestionTypeName)
                         {

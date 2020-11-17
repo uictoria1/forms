@@ -107,14 +107,17 @@ export class Form extends Component {
 
     render() {
         return (
-            <div>
+            <div className="mt-5">
                 <form onSubmit={this.submit}>
                     {this.state.currentInput}
-                    <button type="submit" disabled={ this.state.disabled}>Save</button>
+                    <div className="mx-auto text-center">
+                        <button className="btn btn-success" type="submit" disabled={ this.state.disabled}>Save</button>
+                    </div>
                 </form>
 
-                <button onClick={this.Prev}>Prev</button>
-                <button onClick={this.Next}>Next</button>
+                <div className="mt-5 mb-5"></div>
+                <button className="btn btn-primary float-left" onClick={this.Prev}>Prev</button>
+                <button className="btn btn-primary float-right" onClick={this.Next}>Next</button>
             </div>
         );
     }

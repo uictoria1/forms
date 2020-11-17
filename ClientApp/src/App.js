@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form } from './components/Form';
 import { Greeting } from './components/Greeting';
+import { Result } from './components/Results';
 
 import './custom.css'
 
@@ -13,7 +14,10 @@ export default class App extends Component {
             apiUrl : "/api/question",
             questions: [],
             start : false,
-            result : false
+            result: false,
+            status: true,
+            statusMessage : "",
+            resultAnswers: null
         }
 
         this.hideGreeting = this.hideGreeting.bind(this);
@@ -38,7 +42,21 @@ export default class App extends Component {
         xhr.open("post", this.state.apiUrl, true);
         xhr.onload = function () {
             if (xhr.status === 200) {
-                // 
+                this.setState({
+                    start: false,
+                    result: true,
+                    status: true,
+                    statusMessage: "Thank you! Your answers saved",
+                    resultAnswers: JSON.parse(xhr.response)
+                });
+            }
+            else {
+                this.setState({
+                    start: false,
+                    result: true,
+                    status: false,
+                    statusMessage: "Sorry. There was an error on the other end"
+                });
             }
         }.bind(this);
         xhr.send(data);
@@ -60,11 +78,12 @@ export default class App extends Component {
 
     render() {
         return (
-            <div>
-                {!this.state.start && <Greeting onClick={ this.hideGreeting} /> }
-                {this.state.start && <Form questions={this.state.questions} sendAnswers={ this.sendData}/> }
-                {this.state.start && <Result questions={this.state.questions} sendAnswers={ this.sendData}/> }
+            <div className="container">
+                {!this.state.start && !this.state.result && <Greeting onClick={ this.hideGreeting} /> }
+                {this.state.start && !this.state.result && <Form questions={this.state.questions} sendAnswers={this.sendData} />}
+                {!this.state.start && this.state.result && <Result statusMessage={this.state.statusMessage} statusResult={this.state.status} Answers={this.state.resultAnswers} />}
             </div>
         );
     }
 }
+

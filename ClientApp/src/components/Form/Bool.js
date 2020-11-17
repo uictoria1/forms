@@ -29,11 +29,16 @@ export class Bool extends Component {
             <>
                 <label>{this.state.question.questionName}</label>
                 <div className="input-group mb-3">
-                    <input checked={ this.state.selected === "yes"} onChange={this.handleChange} name="yes_no" type="radio" value={true}/>
-                    <label>Yes</label>
-
-                    <input checked={this.state.selected === "no"} onChange={this.handleChange} name="yes_no" type="radio" value={false} />
-                    <label>No</label>
+                    <label>Yes &nbsp;</label>
+                    <span class="align-bottom">
+                        <input checked={ this.state.selected === "yes"} onChange={this.handleChange} name="yes_no" type="radio" value={true}/>
+                    </span>
+                     &nbsp; &nbsp; &nbsp;
+                    <label>No &nbsp;</label>
+                    <span class="align-bottom">
+                        <input checked={this.state.selected === "no"} onChange={this.handleChange} name="yes_no" type="radio" value={false} />
+                    </span>
+                    
                 </div>
             </>
         );
