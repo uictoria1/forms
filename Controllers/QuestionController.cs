@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Forms.Models;
 using Forms.Models.DbAppContext;
 using Microsoft.EntityFrameworkCore;
+using System;
+using Microsoft.AspNetCore.Http;
 
 namespace Forms.Controllers
 {
@@ -43,15 +45,46 @@ namespace Forms.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(Phone phone)
+        public IActionResult Post(ICollection<ReceivedAnswer> answers)
         {
-            // add answers
+            foreach(var answer in answers)
+            {
+                var ans = new Answer();
+                var question = db.Questions.Find(answer.key);
+                var questOption = db.QuestionOptions.Where(qo => qo.QuestionId == question.Id).FirstOrDefault();
+                var questType = db.QuestionTypes.Find(question.QuestionTypeId);
 
-            //phone.Id = Guid.NewGuid().ToString();
-            //data.Add(phone);
-            //return Ok(phone);
+                switch (questType.QuestionTypeName)
+                {
+                    case "text":
+                        ans.AnswerTextEnum = answer.value;
+                        break;
+                    case "int":
+                        ans.AnswerInt = Int16.Parse(answer.value);
+                        break;
+                    case "bool":
+                        if(answer.value == "true")
+                            ans.AnswerBoolean = true;
+                        else
+                            ans.AnswerBoolean = false;
+                        break;
+                    case "date":
+                        ans.AnswerDate = Convert.ToDateTime(answer.value);
+                        break;
+                }
 
-            return null;
+                ans.QuestionOptionId = questType.Id;
+
+                db.Answers.Add(ans);
+            }
+
+
+            db.SaveChanges();
+            s
+            if(db.)
+
+
+            return Ok(answers);
         }
     }
 }

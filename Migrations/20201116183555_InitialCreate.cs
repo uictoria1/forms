@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Forms.Migrations
 {
@@ -113,9 +114,9 @@ namespace Forms.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AnswerTextEnum = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AnswerInt = table.Column<int>(type: "int", nullable: false),
-                    AnswerDate = table.Column<int>(type: "int", nullable: false),
-                    AnswerBoolean = table.Column<bool>(type: "bit", nullable: false),
+                    AnswerInt = table.Column<int>(type: "int", nullable: true),
+                    AnswerDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    AnswerBoolean = table.Column<bool>(type: "bit", nullable: true),
                     QuestionOptionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

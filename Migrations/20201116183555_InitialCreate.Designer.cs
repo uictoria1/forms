@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Forms.Migrations
 {
     [DbContext(typeof(DbAppContext))]
-    [Migration("20201115162017_InitialCreate")]
+    [Migration("20201116183555_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,13 +28,13 @@ namespace Forms.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<bool>("AnswerBoolean")
+                    b.Property<bool?>("AnswerBoolean")
                         .HasColumnType("bit");
 
-                    b.Property<int>("AnswerDate")
-                        .HasColumnType("int");
+                    b.Property<DateTime?>("AnswerDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("AnswerInt")
+                    b.Property<int?>("AnswerInt")
                         .HasColumnType("int");
 
                     b.Property<string>("AnswerTextEnum")

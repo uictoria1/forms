@@ -16,10 +16,35 @@ export default class App extends Component {
         }
 
         this.hideGreeting = this.hideGreeting.bind(this);
+        this.sendData = this.sendData.bind(this);
     }
 
     componentDidMount() {
         this.loadData();
+    }
+
+    sendData(answers) {
+        let data = new FormData();
+        let count = 0;
+        for (const [key, value] of Object.entries(answers)) {
+            data.append("[" + count + "].key", key);
+            data.append("[" + count + "].value", value);
+            count++;
+        }
+
+        //data["keys[]"] = Object.keys(answers);
+        //data['values[]'] = Object.values(answers);
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("post", this.state.apiUrl, true);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                //this.loadData();
+                console.log("success");
+            }
+        }.bind(this);
+        xhr.send(data);
     }
 
     loadData() {
@@ -40,7 +65,7 @@ export default class App extends Component {
         return (
             <div>
                 {!this.state.start && <Greeting onClick={ this.hideGreeting} /> }
-                {this.state.start && <Form questions={this.state.questions}/> }
+                {this.state.start && <Form questions={this.state.questions} sendAnswers={ this.sendData}/> }
             </div>
         );
     }

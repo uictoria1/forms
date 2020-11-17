@@ -7,10 +7,11 @@ namespace Forms.Models
     public class Answer
     {
         public int Id { get; set; }
+
         public string AnswerTextEnum { get; set; }
-        public int AnswerInt { get; set; }
-        public int AnswerDate { get; set; }
-        public bool AnswerBoolean { get; set; }
+        public int? AnswerInt { get; set; }
+        public System.Nullable<DateTime> AnswerDate { get; set; }
+        public System.Nullable<bool> AnswerBoolean { get; set; }
 
 
         public int QuestionOptionId { get; set; }
