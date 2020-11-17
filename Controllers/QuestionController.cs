@@ -60,7 +60,7 @@ namespace Forms.Controllers
                         var questOption = db.QuestionOptions.Where(qo => qo.QuestionId == question.Id).FirstOrDefault();
                         var questType = db.QuestionTypes.Find(question.QuestionTypeId);
 
-                        response.Add(question.Id, answer.value);
+                        response.Add(question.QuestionName, questType.QuestionTypeName answer.value);
 
                         switch (questType.QuestionTypeName)
                         {

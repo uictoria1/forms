@@ -12,7 +12,8 @@ export default class App extends Component {
         this.state = {
             apiUrl : "/api/question",
             questions: [],
-            start : false
+            start : false,
+            result : false
         }
 
         this.hideGreeting = this.hideGreeting.bind(this);
@@ -62,6 +63,7 @@ export default class App extends Component {
             <div>
                 {!this.state.start && <Greeting onClick={ this.hideGreeting} /> }
                 {this.state.start && <Form questions={this.state.questions} sendAnswers={ this.sendData}/> }
+                {this.state.start && <Result questions={this.state.questions} sendAnswers={ this.sendData}/> }
             </div>
         );
     }
